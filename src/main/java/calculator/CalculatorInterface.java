@@ -1,5 +1,4 @@
-package calculator1;
-
+package calculator;
 interface CalculatorInterface {
 
     /*

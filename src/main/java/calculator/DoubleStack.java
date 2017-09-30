@@ -1,3 +1,4 @@
+package calculator;
 /** 
  * @elements numbers of the type Double
  * @structure linear

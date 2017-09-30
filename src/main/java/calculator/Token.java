@@ -1,3 +1,4 @@
+package calculator;
 /**
  * Token interface. 
  * @elements characters

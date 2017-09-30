@@ -1,4 +1,4 @@
-package calculator1;
+package calculator;
 /**
  * @elements Tokens of the type Token
  * @structure linear
