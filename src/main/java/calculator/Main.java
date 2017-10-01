@@ -3,7 +3,6 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class Main implements CalculatorInterface {
 
@@ -22,30 +21,52 @@ public class Main implements CalculatorInterface {
 
 
        public Double rpn(TokenList tokens) {
-    //	Token temp;
-    //	Stack stack = new Stack();
+    	Token temp;
+    	TokenStack stack = new TStack();
     	double result = 0;
-    	/*
+    	
     	for (int i = 0; i < tokens.size(); i++) {
     		temp = tokens.get(i);
     		
     		switch (temp.getType()) {
     			case 1: stack.push(temp);
-    			case 2: 
-    			case 3:
+    			case 2: temp = evaluate(temp,stack.pop(), stack.pop());
     		}
     	}
     	
-    	*/ 	
+    	if (stack.size() == 1) {
+    		result = Double.parseDouble(stack.pop().getValue());
+    	} else {
+    		System.err.print("Invalid input remaining!");
+    	}
+    	 	
         return result;
     }
     
-       /*    private double evaluate(Token operator, Token operandA, Token operandB) {
-    	double result;
+       private Token evaluate(Token operator, Token operandA, Token operandB) {
+    	   Token temp;
+    	   double result = 0;
     	
     	if (operator.getValue().equals("+")) {
+    		result = Double.parseDouble(operandA.getValue()) + Double.parseDouble(operandB.getValue());
+    	} else if (operator.getValue().equals("-")) {
+    		result = Double.parseDouble(operandA.getValue()) - Double.parseDouble(operandB.getValue());
+    	} else if (operator.getValue().equals("*")) {
+    		result = Double.parseDouble(operandA.getValue()) * Double.parseDouble(operandB.getValue());
+    	} else if (operator.getValue().equals("/")) {
+    		result = Double.parseDouble(operandA.getValue()) / Double.parseDouble(operandB.getValue());
+    	} else if (operator.getValue().equals("^")) {
+    		result  = Double.parseDouble(operandB.getValue());
+    		
+    		for (int i = 0; i < Double.parseDouble(operandB.getValue()); i++) {
+    			result = result * Double.parseDouble(operandB.getValue());
+    		}
     	}
-    } */
+    	
+    	temp = new Unit(Double.toString(result));
+    	
+		return temp;
+    } 
 
     public TokenList shuntingYard(TokenList tokens) {
         // TODO: Implement this
@@ -59,6 +80,8 @@ public class Main implements CalculatorInterface {
         while(in.hasNextLine()) {
         	readTokens(in.nextLine());
         }
+        
+        in.close();
     }
 
     public static void main(String[] argv) {
