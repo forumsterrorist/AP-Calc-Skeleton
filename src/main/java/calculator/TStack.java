@@ -15,16 +15,16 @@ public class TStack implements TokenStack {
 	@Override
 	public Token pop() {
 		Token temp;
-		
-		temp = stack.get(stack.size());
-		stack.remove(stack.size());
-		
+
+		temp = stack.get(stack.size() - 1);
+		stack.remove(stack.size() - 1);
+
 		return temp;
 	}
 
 	@Override
 	public Token top() {
-		return stack.get(stack.size());
+		return stack.get(stack.size() - 1);
 	}
 
 	@Override
