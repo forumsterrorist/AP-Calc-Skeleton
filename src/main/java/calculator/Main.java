@@ -1,7 +1,4 @@
-//package calculator;
-import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.Map;
+package calculator;
 import java.util.Scanner;
 
 public class Main implements CalculatorInterface {
@@ -58,11 +55,34 @@ public class Main implements CalculatorInterface {
     	} else if (operator.getValue().equals("/")) {
     		result = Double.parseDouble(operandA.getValue()) / Double.parseDouble(operandB.getValue());
     	} else if (operator.getValue().equals("^")) {
-    		double ttp  = Double.parseDouble(operandB.getValue());
-
-    		for (int i = 0; i < ttp; i++) {
-    			result = result * ttp;
+    		double index = Double.parseDouble(operandB.getValue());
+    		double value  = Double.parseDouble(operandA.getValue());
+    		
+    		if (value < 0) {
+    			index = 1 / index;
+    			value = -value;
     		}
+    		
+    		if (value == 0) {
+    			result = 1;
+    			temp = new Unit(Double.toString(result));
+    			return temp;
+    		}
+    		
+    		double y = 1;
+    		
+    		while (value > 1) {
+    			if (value % 2 == 0) {
+    				index = index * index;
+    				value = value / 2;		
+    			} else {
+    				y = index * y;
+    				index = index * index;
+    				value = (value - 1) / 2;
+    			}
+    		}
+    		
+    		result = index * y;
     	}
 
     	temp = new Unit(Double.toString(result));
@@ -107,19 +127,19 @@ public class Main implements CalculatorInterface {
 
     private void start() {
         Scanner in = new Scanner(System.in);
-        String inp = "( ( ( 15  / ( 7 - ( 1 + 1 ) ) ) * 3 ) - ( 2 + ( 1 + 1 ) ) ) ^ 3";
+     //   String inp = "( ( ( 15  / ( 7 - ( 1 + 1 ) ) ) * 3 ) - ( 2 + ( 1 + 1 ) ) ) ^ 3";
         // While there is input, read line and parse it.
         while(in.hasNextLine()) {
-          //TokenList step1 = readTokens(in.nextLine());
-          TokenList step1 = readTokens(inp);
+          TokenList step1 = readTokens(in.nextLine());
+         // TokenList step1 = readTokens(inp);
           System.out.print("Done reading\n");
           TokenList step2 = shuntingYard(step1);
           System.out.print("Done shunting\n");
           double result = rpn(step2);
           System.out.print("Done rpn\n");
-        	//double result = rpn(shuntingYard(readTokens(in.nextLine())));
+        //double result = rpn(shuntingYard(readTokens(in.nextLine())));
           System.out.printf("Result: %f\n", result);
-          break;
+         // break;
         }
 
         in.close();
